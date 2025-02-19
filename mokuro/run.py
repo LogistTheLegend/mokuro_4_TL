@@ -11,6 +11,8 @@ from mokuro import __version__
 from mokuro.legacy.overlay_generator import generate_legacy_html
 from mokuro.volume import VolumeCollection
 
+import transcript
+
 
 def run(
     *paths: Optional[Sequence[Union[str, Path]]],
@@ -64,7 +66,7 @@ def run(
 
     paths_ = []
     for path in paths:
-        path_normalized = Path(str(path)).expanduser().absolute()
+        path_normalized = Path(path).expanduser().absolute()
 
         try:
             path_valid = path_normalized.exists()
@@ -105,7 +107,6 @@ def run(
     print(f"\nFound {len(vc)} volumes:\n")
 
     for volume in vc:
-        print(volume)
         status_counter[volume.status] += 1
 
     msg = "\nEach of the paths above will be treated as one volume.\n"
@@ -142,9 +143,13 @@ def run(
                 logger.exception(f"Error while processing {volume.path_in}")
             else:
                 num_sucessful += 1
+            
+            # get transcript
+            transcript.get_transcript(volume)
 
         logger.info(f"Processed successfully: {num_sucessful}/{len(vc)}")
 
+        
 
 if __name__ == "__main__":
     fire.Fire(run)
