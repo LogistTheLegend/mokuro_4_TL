@@ -1,3 +1,7 @@
+# mokuro 4 TL
+Fork of mokuro: https://github.com/kha-white/mokuro
+For the purpose of adding some small features for manga translation.
+
 # mokuro
 
 Read Japanese manga with selectable text inside a browser.
